@@ -23,3 +23,14 @@ pip install -r requirements.txt
 python -m spacy download en_core_web_sm
 ```
 
+3. Run the application:
+```bash
+streamlit run app.py
+```
+
+## Project Structure
+
+- `app.py`: Streamlit dashboard implementation
+- `analysis.py`: Core analysis functions
+- `transcript.txt`: Sample conversation transcript
+- `requirements.txt`: Project dependencies
