@@ -102,7 +102,7 @@ def calculate_filler_word_stats(text: str) -> Dict[str, Any]:
         'ratio': round(ratio, 4)
     }
 
-def analyze_transcript_data(transcript_file_path: str = 'transcript.txt') -> List[Dict[str, Any]]:
+def analyze_transcript_data(transcript_file_path: str = 'transcript.txt') -> list:
     dialogue_turns = parse_transcript(transcript_file_path)
     analysis_results = []
     if not dialogue_turns:

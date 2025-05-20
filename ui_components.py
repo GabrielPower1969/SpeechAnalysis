@@ -25,12 +25,23 @@ def display_transcript_analysis_tab(df_analysis: pd.DataFrame, raw_turns: list):
     df_display[COL_SENTIMENT_SCORE] = df_display[COL_SENTIMENT_SCORE].apply(lambda x: f"{x:.1%}")
     df_display[COL_FILLER_RATIO] = df_display[COL_FILLER_RATIO].apply(lambda x: f"{x:.1%}")
     st.dataframe(df_display[[COL_TURN_NUM, COL_SPEAKER, COL_DIALOGUE, COL_SENTIMENT_LABEL, COL_SENTIMENT_SCORE, COL_FILLER_COUNT, COL_TOTAL_WORDS, COL_FILLER_RATIO]], height=400)
+    # CSV download button
+    @st.cache_data
+    def convert_df_to_csv(df):
+        return df.to_csv(index=False).encode('utf-8')
+    csv_turn_by_turn = convert_df_to_csv(df_display)
+    st.download_button(
+        label="📥 Download Turn-by-Turn Analysis (CSV)",
+        data=csv_turn_by_turn,
+        file_name='turn_by_turn_analysis.csv',
+        mime='text/csv',
+    )
     st.subheader("Sentiment Score per Turn")
     if not df_analysis.empty and COL_SENTIMENT_SCORE in df_analysis.columns:
         fig_sentiment_turn = px.bar(df_analysis, x=COL_TURN_NUM, y=COL_SENTIMENT_SCORE, color=COL_SENTIMENT_LABEL,
                                     title="Sentiment Score by Turn",
                                     labels={COL_SENTIMENT_SCORE: "Sentiment Score", COL_TURN_NUM: "Turn Number"},
-                                    color_discrete_map={'POSITIVE': 'green', 'NEGATIVE': 'red', 'NEUTRAL': 'grey'})
+                                    color_discrete_map={'POSITIVE': 'green', 'NEGATIVE': 'red', 'NEUTRAL': 'grey', 'positive': 'green', 'negative': 'red', 'neutral': 'grey'})
         st.plotly_chart(fig_sentiment_turn, use_container_width=True)
     st.subheader("Filler Word Ratio per Turn")
     if not df_analysis.empty and COL_FILLER_RATIO in df_analysis.columns:
@@ -112,11 +123,24 @@ def display_summary_metrics_tab(df_analysis: pd.DataFrame):
     col_wc3.metric("Median Words/Turn", f"{median_words:.0f}")
     col_wc4.metric("Avg Words/Turn", f"{avg_words:.1f}")
     if not df_analysis.empty:
-        bins = [0, 10, 20, 30, 50, df_analysis[COL_TOTAL_WORDS].max() + 1]
-        labels = ['1-10', '11-20', '21-30', '31-50', '51+']
-        if df_analysis[COL_TOTAL_WORDS].max() <= 30 :
-             bins = [0, 10, 20, df_analysis[COL_TOTAL_WORDS].max() + 1]
-             labels = ['1-10', '11-20', '21+']
+        # Robust binning for word count distribution
+        if max_words <= 10:
+            bins = [0, max_words + 1]
+            labels = [f'1-{max_words}']
+        elif max_words <= 20:
+            bins = [0, 10, max_words + 1]
+            labels = ['1-10', f'11-{max_words}']
+        elif max_words <= 30:
+            bins = [0, 10, 20, max_words + 1]
+            labels = ['1-10', '11-20', f'21-{max_words}']
+        elif max_words <= 50:
+            bins = [0, 10, 20, 30, 50, max_words + 1]
+            labels = ['1-10', '11-20', '21-30', '31-50', f'51-{max_words}']
+        else:
+            bins = [0, 10, 20, 30, 50, 100, max_words + 1]
+            labels = ['1-10', '11-20', '21-30', '31-50', '51-100', f'101-{max_words}']
+        # Ensure bins are unique
+        bins = list(dict.fromkeys(bins))
         df_analysis['Word_Count_Range'] = pd.cut(df_analysis[COL_TOTAL_WORDS], bins=bins, labels=labels, right=True, include_lowest=True)
         word_count_dist = df_analysis['Word_Count_Range'].value_counts().sort_index().reset_index()
         word_count_dist.columns = ['Word Count Range', 'Number of Turns']
