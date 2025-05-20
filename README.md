@@ -1,2 +1,25 @@
-# SpeechAnalysis
-Build a Python application that analyzes dialogue transcripts for sentiment and filler-word usage, rendering an interactive report with per-turn metrics.
+# Speech Analysis Dashboard
+
+This project analyzes speech transcripts for sentiment and filler word usage, providing an interactive dashboard for visualization.
+
+## Features
+
+- Sentiment analysis using Hugging Face Transformers
+- Filler word detection and ratio calculation
+- Interactive dashboard with visualizations
+- Detailed metrics and statistics
+
+## Setup
+
+1. Create a virtual environment:
+```bash
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+```
+
+2. Install dependencies:
+```bash
+pip install -r requirements.txt
+python -m spacy download en_core_web_sm
+```
+

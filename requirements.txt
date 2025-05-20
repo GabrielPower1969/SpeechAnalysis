@@ -1,0 +1,7 @@
+transformers==4.38.2
+torch==2.2.1
+spacy==3.7.4
+streamlit==1.32.2
+python-dotenv==1.0.1
+pandas==2.2.1
+plotly==5.19.0 
