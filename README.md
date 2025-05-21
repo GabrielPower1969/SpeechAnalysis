@@ -73,6 +73,14 @@ See the `/output_demo/` folder for screenshots of the dashboard and example outp
 - All code is modular, well-documented, and follows best practices for clarity and maintainability.
 - The app uses only free, open-source tools and models.
 - The transcript format is strictly enforced for fairness and comparability.
+# output demo
+## 
+
+<p float="left">
+  <img src="output_demo/analysis_tab.png" width="32%" />
+  <img src="output_demo/summary_tab.png" width="32%" />
+  <img src="output_demo/charts_tab.png" width="32%" />
+</p>
 
 ---
 
