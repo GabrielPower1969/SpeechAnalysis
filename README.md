@@ -1,5 +1,11 @@
 # Transcript Analysis Dashboard
 
+<p float="left">
+  <img width="300" alt="Turn Analysis Tab" src="https://github.com/GabrielPower1969/SpeechAnalysis/blob/main/output_demo/1%20turn%20analysis.png?raw=true">
+  <img width="300" alt="Summary Analysis Tab" src="https://github.com/GabrielPower1969/SpeechAnalysis/blob/main/output_demo/2%20summary%20analysis.png?raw=true">
+  <img width="300" alt="Upload & Download Function" src="https://github.com/GabrielPower1969/SpeechAnalysis/blob/main/output_demo/3%20upload_download_function.png?raw=true">
+</p>
+
 This project is a technical challenge submission for Bones. It analyzes dialogue transcripts for sentiment and filler-word usage, presenting results in an interactive dashboard.
 
 ## Challenge Overview
@@ -73,14 +79,6 @@ See the `/output_demo/` folder for screenshots of the dashboard and example outp
 - All code is modular, well-documented, and follows best practices for clarity and maintainability.
 - The app uses only free, open-source tools and models.
 - The transcript format is strictly enforced for fairness and comparability.
-# output demo
-## 
-
-<p float="left">
-  <img src="output_demo/analysis_tab.png" width="32%" />
-  <img src="output_demo/summary_tab.png" width="32%" />
-  <img src="output_demo/charts_tab.png" width="32%" />
-</p>
 
 ---
 
