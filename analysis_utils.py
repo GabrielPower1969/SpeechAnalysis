@@ -121,4 +121,37 @@ def analyze_transcript_data(transcript_file_path: str = 'transcript.txt') -> lis
             COL_TOTAL_WORDS: filler_stats['total_words'],
             COL_FILLER_RATIO: filler_stats['ratio']
         })
-    return analysis_results 
+    return analysis_results
+
+if __name__ == "__main__":
+    print("--- Sentiment Analysis Test Cases ---")
+    test_texts = [
+        "I love this!",  # positive
+        "This is terrible.",  # negative
+        "It's okay.",  # neutral
+        "",  # empty string
+        "Um, well, you know, it's kind of, like, fine.",  # neutral with fillers
+        "The food was good, but the service was bad.",  # mixed
+        "Absolutely amazing!",  # positive
+        "I don't know...",  # ambiguous
+        "so, um, like, just, you know",  # only fillers
+    ]
+    for text in test_texts:
+        result = calculate_sentiment(text)
+        print(f"Text: '{text}' => Sentiment: {result['label']}, Score: {result['score']}")
+
+    print("\n--- Filler Word Ratio Test Cases ---")
+    filler_tests = [
+        "Um, I was thinking about trying that new restaurant.",  # 1 filler
+        "You know, like, it's basically the best place ever.",  # 3 fillers
+        "Well, I mean, it's kind of expensive, but the food is good.",  # 3 fillers
+        "No fillers here.",  # 0 fillers
+        "",  # empty string
+        "um um um um",  # all fillers
+        "So, so, so, so, so!",  # repeated filler with punctuation
+        "Just a regular sentence with nothing special.",  # 1 filler
+        "like, like, like, like, like",  # repeated single filler
+    ]
+    for text in filler_tests:
+        result = calculate_filler_word_stats(text)
+        print(f"Text: '{text}' => Filler Count: {result['count']}, Total Words: {result['total_words']}, Ratio: {result['ratio']:.2%}") 
